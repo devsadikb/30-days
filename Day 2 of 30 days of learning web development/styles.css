@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+  background: linear-gradient(135deg, #59e0cb, #f0ede3, #ea7d82);
   font-family: "Arial", sans-serif;
   display: flex;
   justify-content: center;
@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  background: white;
+  background: linear-gradient(to top, white, white 97%, #fdcacd, #fdcacd 10%);
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -18,11 +18,11 @@ body {
 }
 
 .header {
-  text-align: center;
-  margin-top: 1%;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
   position: relative;
 }
-
 .form-group {
   margin-bottom: 15px;
   text-align: left;
@@ -31,14 +31,15 @@ body {
 .form-group input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   font-size: 14px;
-  text-decoration: none;
+  font-weight: bold;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #c5f1e0;
 }
 
 .form-group input:focus {
-  border-color: #a1c4fd;
+  border-color: #7fc4ad;
   outline: none;
 }
 
@@ -59,10 +60,15 @@ body {
 
 .signin-text {
   margin-top: 15px;
+  color: #7fc4ad;
   font-size: 14px;
 }
 
 .signin-text a {
   color: #ff6b6b;
   text-decoration: none;
+}
+label {
+  font-size: 14px;
+  color: #7fc4ad;
 }
