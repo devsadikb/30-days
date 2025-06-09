@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.purchase-card {
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.hero-section {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://bmw-mexico-public.s3.us-west-2.amazonaws.com/production/inventory-vehicle/WBS21ET09S9Y99947_LowRes_Front.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+  color: white;
+}
+
+.purchase-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.order-details {
+  font-size: 14px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.track-button {
+  position: absolute;
+  bottom: -25px;
+  left: 30px;
+  background: linear-gradient(135deg, #a855f7, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.track-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+}
+
+.content-section {
+  padding: 50px 30px 30px;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.price-section {
+  text-align: right;
+}
+
+.price-label {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.price-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.dotted-line {
+  border: none;
+  border-top: 2px dotted #e5e7eb;
+  margin: 20px 0;
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .purchase-card {
+    margin: 10px;
+  }
+
+  .hero-section {
+    padding: 20px;
+    height: 180px;
+  }
+
+  .purchase-title {
+    font-size: 24px;
+  }
+
+  .track-button {
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .content-section {
+    padding: 40px 20px 20px;
+  }
+
+  .product-info {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .price-section {
+    text-align: left;
+  }
+}
