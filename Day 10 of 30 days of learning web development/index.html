@@ -1,11 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #e5e7eb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 768px;
+            background-color: #000000;
+            color: #f5f5dc;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-info {
+            flex: 1;
+            padding-right: 0;
+        }
+
+        .title {
+            font-size: 2.25rem;
+            font-weight: 300;
+            color: #f5f5dc;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-section {
+            margin-bottom: 2rem;
+        }
+
+        .contact-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-value {
+            color: #f5f5dc;
+            font-size: 1rem;
+        }
+
+        .planet-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2.5rem;
+        }
+
+        .planet-svg {
+            width: 12rem;
+            height: 12rem;
+        }
+
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            .content {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .contact-info {
+                padding-right: 2rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .planet-container {
+                justify-content: flex-end;
+                margin-top: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  
+    <div class="container">
+        <div class="content">
+            <div class="contact-info">
+                <h1 class="title">Contact Us</h1>
+
+                <div class="contact-section">
+                    <p class="contact-label">PHONE</p>
+                    <p class="contact-value">+33340596054</p>
+                </div>
+
+                <div class="contact-section">
+                    <p class="contact-label">EMAIL</p>
+                    <p class="contact-value">admin@devsadik.com</p>
+                </div>
+
+                <div class="contact-section">
+                    <p class="contact-label">ADDRESS</p>
+                    <p class="contact-value">Samson Road 311, Leeds, UK</p>
+                </div>
+            </div>
+
+            <div class="planet-container">
+                <img src="vecteezy_contact-us-icon-communication-icon_42887274.png" alt="Contact Us Icon" class="planet-svg">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
