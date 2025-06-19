@@ -1,318 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #e5e7eb;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background-color: #e5e7eb;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .contact-card {
+        background-color: #111827;
+        border-radius: 0.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        padding: 3rem;
+        max-width: 64rem;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .contact-title {
+        font-size: 1.875rem;
+        font-weight: 300;
+        color: white;
+        margin-bottom: 3rem;
+      }
+
+      .contact-section {
+        margin-bottom: 2rem;
+      }
+
+      .contact-label {
+        color: #9ca3af;
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .contact-value {
+        color: white;
+        font-size: 1.125rem;
+      }
+
+      .illustration-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 16rem;
+      }
+
+      .orbital-system {
+        position: relative;
+        width: 16rem;
+        height: 16rem;
+      }
+
+      .outer-ring {
+        position: absolute;
+        inset: 0;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        opacity: 0.8;
+      }
+
+      .inner-ring {
+        position: absolute;
+        inset: 2rem;
+        border: 1px solid #9ca3af;
+        border-radius: 50%;
+        opacity: 0.6;
+      }
+
+      .center-icon {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .paper-plane {
+        width: 3rem;
+        height: 3rem;
+        color: #d1d5db;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+      }
+
+      .orbital-dot {
+        position: absolute;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: #d1d5db;
+        border-radius: 50%;
+      }
+
+      .dot-top {
+        top: -0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .dot-right {
+        top: 50%;
+        right: -0.25rem;
+        transform: translateY(-50%);
+      }
+
+      .dot-bottom {
+        bottom: -0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .dot-left {
+        top: 50%;
+        left: -0.25rem;
+        transform: translateY(-50%);
+      }
+
+      .decorative-dot {
+        position: absolute;
+        background-color: #9ca3af;
+        border-radius: 50%;
+      }
+
+      .small-dot {
+        width: 0.375rem;
+        height: 0.375rem;
+      }
+
+      .tiny-dot {
+        width: 0.25rem;
+        height: 0.25rem;
+        background-color: #6b7280;
+      }
+
+      .dot-1 {
+        top: 2rem;
+        right: 2rem;
+      }
+
+      .dot-2 {
+        bottom: 2rem;
+        left: 2rem;
+      }
+
+      .dot-3 {
+        top: 4rem;
+        left: 1rem;
+      }
+
+      .dot-4 {
+        bottom: 4rem;
+        right: 5rem;
+      }
+
+      .x-symbol {
+        position: absolute;
+        color: #9ca3af;
+        font-size: 1.125rem;
+        font-weight: 300;
+        user-select: none;
+      }
+
+      .x-1 {
+        top: 2rem;
+        right: 3rem;
+      }
+
+      .x-2 {
+        bottom: 3rem;
+        left: 2rem;
+      }
+
+      .x-3 {
+        top: 5rem;
+        left: 4rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      .x-4 {
+        bottom: 5rem;
+        right: 5rem;
+        font-size: 0.875rem;
+        color: #6b7280;
+      }
+
+      @media (max-width: 1024px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 2rem;
         }
 
         .contact-card {
-            background-color: #111827;
-            border-radius: 0.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            padding: 3rem;
-            max-width: 64rem;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+          padding: 2rem;
         }
 
         .contact-title {
-            font-size: 1.875rem;
-            font-weight: 300;
-            color: white;
-            margin-bottom: 3rem;
+          font-size: 1.5rem;
+          margin-bottom: 2rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
         }
 
-        .contact-section {
-            margin-bottom: 2rem;
-        }
-
-        .contact-label {
-            color: #9ca3af;
-            font-size: 0.875rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-value {
-            color: white;
-            font-size: 1.125rem;
-        }
-
-        .illustration-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 16rem;
+        .contact-card {
+          padding: 1.5rem;
         }
 
         .orbital-system {
-            position: relative;
-            width: 16rem;
-            height: 16rem;
+          width: 12rem;
+          height: 12rem;
         }
 
-        .outer-ring {
-            position: absolute;
-            inset: 0;
-            border: 2px solid #d1d5db;
-            border-radius: 50%;
-            opacity: 0.8;
+        .illustration-container {
+          height: 12rem;
         }
-
-        .inner-ring {
-            position: absolute;
-            inset: 2rem;
-            border: 1px solid #9ca3af;
-            border-radius: 50%;
-            opacity: 0.6;
-        }
-
-        .center-icon {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .paper-plane {
-            width: 3rem;
-            height: 3rem;
-            color: #d1d5db;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.5;
-        }
-
-        .orbital-dot {
-            position: absolute;
-            width: 0.5rem;
-            height: 0.5rem;
-            background-color: #d1d5db;
-            border-radius: 50%;
-        }
-
-        .dot-top {
-            top: -0.25rem;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .dot-right {
-            top: 50%;
-            right: -0.25rem;
-            transform: translateY(-50%);
-        }
-
-        .dot-bottom {
-            bottom: -0.25rem;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .dot-left {
-            top: 50%;
-            left: -0.25rem;
-            transform: translateY(-50%);
-        }
-
-        .decorative-dot {
-            position: absolute;
-            background-color: #9ca3af;
-            border-radius: 50%;
-        }
-
-        .small-dot {
-            width: 0.375rem;
-            height: 0.375rem;
-        }
-
-        .tiny-dot {
-            width: 0.25rem;
-            height: 0.25rem;
-            background-color: #6b7280;
-        }
-
-        .dot-1 {
-            top: 2rem;
-            right: 2rem;
-        }
-
-        .dot-2 {
-            bottom: 2rem;
-            left: 2rem;
-        }
-
-        .dot-3 {
-            top: 4rem;
-            left: 1rem;
-        }
-
-        .dot-4 {
-            bottom: 4rem;
-            right: 5rem;
-        }
-
-        .x-symbol {
-            position: absolute;
-            color: #9ca3af;
-            font-size: 1.125rem;
-            font-weight: 300;
-            user-select: none;
-        }
-
-        .x-1 {
-            top: 2rem;
-            right: 3rem;
-        }
-
-        .x-2 {
-            bottom: 3rem;
-            left: 2rem;
-        }
-
-        .x-3 {
-            top: 5rem;
-            left: 4rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        .x-4 {
-            bottom: 5rem;
-            right: 5rem;
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
-
-        @media (max-width: 1024px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-card {
-                padding: 2rem;
-            }
-
-            .contact-title {
-                font-size: 1.5rem;
-                margin-bottom: 2rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            body {
-                padding: 1rem;
-            }
-
-            .contact-card {
-                padding: 1.5rem;
-            }
-
-            .orbital-system {
-                width: 12rem;
-                height: 12rem;
-            }
-
-            .illustration-container {
-                height: 12rem;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="contact-card">
-        <div class="contact-grid">
-            <!-- Left side - Contact Information -->
-            <div class="contact-info">
-                <h1 class="contact-title">Contact Us</h1>
+      <div class="contact-grid">
+        <!-- Left side - Contact Information -->
+        <div class="contact-info">
+          <h1 class="contact-title">Contact Us</h1>
 
-                <div class="contact-section">
-                    <p class="contact-label">PHONE</p>
-                    <p class="contact-value">+233405960654</p>
-                </div>
+          <div class="contact-section">
+            <p class="contact-label">PHONE</p>
+            <p class="contact-value">+233405960654</p>
+          </div>
 
-                <div class="contact-section">
-                    <p class="contact-label">EMAIL</p>
-                    <p class="contact-value">admin@devsadik.com</p>
-                </div>
+          <div class="contact-section">
+            <p class="contact-label">EMAIL</p>
+            <p class="contact-value">admin@devsadik.com</p>
+          </div>
 
-                <div class="contact-section">
-                    <p class="contact-label">ADDRESS</p>
-                    <p class="contact-value">Samson Road 311,Leeds,UK</p>
-                </div>
-            </div>
-
-            <!-- Right side - Decorative Illustration -->
-            <div class="illustration-container">
-                <div class="orbital-system">
-                    <!-- Outer orbital ring -->
-                    <div class="outer-ring"></div>
-
-                    <!-- Inner orbital ring -->
-                    <div class="inner-ring"></div>
-
-                    <!-- Paper airplane in center -->
-                    <div class="center-icon">
-                        <svg class="paper-plane" viewBox="0 0 24 24">
-                            <path d="M3 3l18 9-18 9v-7l15-2-15-2V3z" />
-                        </svg>
-                    </div>
-
-                    <!-- Orbital dots -->
-                    <div class="orbital-dot dot-top"></div>
-                    <div class="orbital-dot dot-right"></div>
-                    <div class="orbital-dot dot-bottom"></div>
-                    <div class="orbital-dot dot-left"></div>
-
-                    <!-- Additional decorative dots -->
-                    <div class="decorative-dot small-dot dot-1"></div>
-                    <div class="decorative-dot small-dot dot-2"></div>
-                    <div class="decorative-dot tiny-dot dot-3"></div>
-                    <div class="decorative-dot tiny-dot dot-4"></div>
-                </div>
-
-                <!-- X symbols scattered around -->
-                <div class="x-symbol x-1">×</div>
-                <div class="x-symbol x-2">×</div>
-                <div class="x-symbol x-3">×</div>
-                <div class="x-symbol x-4">×</div>
-            </div>
+          <div class="contact-section">
+            <p class="contact-label">ADDRESS</p>
+            <p class="contact-value">Samson Road 311,Leeds,UK</p>
+          </div>
         </div>
+
+        <!-- Right side - Decorative Illustration -->
+        <div class="illustration-container">
+          <div class="orbital-system">
+            <!-- Outer orbital ring -->
+            <div class="outer-ring"></div>
+
+            <!-- Inner orbital ring -->
+            <div class="inner-ring"></div>
+
+            <!-- Paper airplane in center -->
+            <div class="center-icon">
+              <svg class="paper-plane" viewBox="0 0 24 24">
+                <path d="M3 3l18 9-18 9v-7l15-2-15-2V3z" />
+              </svg>
+            </div>
+
+            <!-- Orbital dots -->
+            <div class="orbital-dot dot-top"></div>
+            <div class="orbital-dot dot-right"></div>
+            <div class="orbital-dot dot-bottom"></div>
+            <div class="orbital-dot dot-left"></div>
+
+            <!-- Additional decorative dots -->
+            <div class="decorative-dot small-dot dot-1"></div>
+            <div class="decorative-dot small-dot dot-2"></div>
+            <div class="decorative-dot tiny-dot dot-3"></div>
+            <div class="decorative-dot tiny-dot dot-4"></div>
+          </div>
+
+          <!-- X symbols scattered around -->
+          <div class="x-symbol x-1">×</div>
+          <div class="x-symbol x-2">×</div>
+          <div class="x-symbol x-3">×</div>
+          <div class="x-symbol x-4">×</div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
