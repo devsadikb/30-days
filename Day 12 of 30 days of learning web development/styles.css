@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.room-card, .reservation-details {
+    background-color: #16213e;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.room-visual {
+    height: 150px;
+    background: linear-gradient(45deg, #6b48ff, #8e5cff);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.room-visual::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.1) 10px,
+        rgba(255, 255, 255, 0.1) 20px
+    );
+    animation: move 10s linear infinite;
+}
+
+@keyframes move {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50%, 50%); }
+}
+
+.room-details h2, .reservation-details h2 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+}
+
+.room-details p, .reservation-info p {
+    margin: 5px 0;
+    color: #a9bcd0;
+}
+
+.status {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.reserve-btn, .done-btn {
+    background-color: #6b48ff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.reserve-btn:hover, .done-btn:hover {
+    background-color: #8e5cff;
+}
+
+.equipment h3, .reservation-info h3, .invited h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #a9bcd0;
+}
+
+.equipment-icons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.invited-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.add {
+    font-size: 1.5em;
+    cursor: pointer;
+}
