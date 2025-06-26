@@ -3,49 +3,793 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Reservation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Nexus - Build the Future of Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 0 2rem;
+        }
+
+        .nav.scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: white;
+        }
+
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #9333ea, #db2777);
+            transform: translateY(-1px);
+        }
+
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(88, 28, 135, 0.6) 50%, rgba(15, 23, 42, 0.8) 100%);
+            z-index: -1;
+        }
+
+        .hero-overlay::before {
+            content: '';
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 256px;
+            height: 256px;
+            background: rgba(168, 85, 247, 0.3);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .hero-overlay::after {
+            content: '';
+            position: absolute;
+            bottom: 25%;
+            right: 25%;
+            width: 384px;
+            height: 384px;
+            background: rgba(236, 72, 153, 0.3);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite 1s;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+            gap: 0.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(45deg, #a855f7, #ec4899);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Dashboard Preview */
+        .dashboard {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .dashboard-preview {
+            position: relative;
+            margin-top: 4rem;
+        }
+
+        .dashboard-preview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        .dashboard-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .dashboard-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.125rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .cta-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            min-width: 200px;
+        }
+
+        .input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input:focus {
+            outline: none;
+            border-color: #a855f7;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40%, 43% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            70% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+            90% {
+                transform: translateX(-50%) translateY(-2px);
+            }
+        }
+
+        /* Icons */
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .icon-sm {
+            width: 16px;
+            height: 16px;
+        }
+
+        .icon-lg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .cta-form {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Video optimizations */
+        @media (max-width: 768px) {
+            .hero-video {
+                /* On mobile, you might want to use a poster image instead */
+                display: none;
+            }
+            
+            .hero-bg {
+                background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            }
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-video {
+                animation-play-state: paused;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="room-card">
-            <div class="room-visual"></div>
-            <div class="room-details">
-                <h2>Cumulus #1</h2>
-                <p><strong>Number of seats:</strong> 4-6</p>
-                <p><strong>STATUS</strong></p>
-                <p class="status">FREE TILL 14:00 PM</p>
-                <button class="reserve-btn">MAKE RESERVATION</button>
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">sadik</span>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#product">Product</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="#" class="btn btn-ghost">Sign In</a>
+                <a href="#" class="btn btn-primary">Get Started</a>
             </div>
         </div>
-        <div class="reservation-details">
-            <h2>Cumulus #1</h2>
-            <div class="equipment">
-                <h3>ROOM EQUIPMENT</h3>
-                <div class="equipment-icons">
-                    <span>📺 Monitor</span>
-                    <span>📽️ Projector</span>
-                    <span>📀 HDMI / USB</span>
-                    <span>📝 Notes</span>
-                </div>
-            </div>
-            <div class="reservation-info">
-                <h3>RESERVATION DETAILS</h3>
-                <p><strong>Created by:</strong> Dawid, Product Designer</p>
-                <p><strong>Date:</strong> Wednesday, July 26, 11:20 pm - 13:45 pm</p>
-            </div>
-            <div class="invited">
-                <h3>INVITED</h3>
-                <div class="invited-list">
-                    <span class="add">+</span>
-                    <span class="avatar"></span>
-                    <span class="avatar"></span>
-                    <span class="avatar"></span>
-                    <span class="avatar"></span>
-                </div>
-            </div>
-            <button class="done-btn">DONE</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <video autoplay muted loop playsinline class="hero-video">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
         </div>
-    </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                Trusted by 10,000+ developers worldwide
+            </div>
+
+            <h1 class="hero-title">
+                Build the<br>
+                <span class="gradient-text">Future</span><br>
+                of Web
+            </h1>
+
+            <p class="hero-description">
+                Create stunning, high-performance applications with our next-generation development platform. Ship faster, scale effortlessly.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary btn-lg">
+                    Start Building
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12,5 19,12 12,19"></polyline>
+                    </svg>
+                </a>
+                <a href="#" class="btn btn-outline btn-lg">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                    </svg>
+                    Watch Demo
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>10K+ Users</span>
+                </div>
+                <div class="hero-stat">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span>4.9/5 Rating</span>
+                </div>
+                <div class="hero-stat">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span>50+ Countries</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Nexus?</h2>
+                <p class="section-description">
+                    Everything you need to build, deploy, and scale modern applications
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"></polygon>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Lightning Fast</h3>
+                    <p class="feature-description">Optimized for speed and performance</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Secure by Default</h3>
+                    <p class="feature-description">Enterprise-grade security built-in</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Global Scale</h3>
+                    <p class="feature-description">Deploy worldwide with one click</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section class="dashboard">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Beautiful Dashboard</h2>
+                <p class="section-description">Intuitive interface designed for developers</p>
+            </div>
+
+            <div class="dashboard-preview">
+                <div class="dashboard-container">
+                    <div class="dashboard-image">
+                        Dashboard Preview Coming Soon
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="section-title">Ready to Get Started?</h2>
+            <p class="section-description">Join thousands of developers building the future</p>
+
+            <form class="cta-form">
+                <input type="email" class="input" placeholder="Enter your email" required>
+                <button type="submit" class="btn btn-primary">Get Started</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">Nexus</span>
+            </div>
+
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 Nexus. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.cta-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert(`Thank you! We'll be in touch at ${email}`);
+            this.reset();
+        });
+    </script>
 </body>
 </html>
