@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Agency - Mobile Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #2D1B69 0%, #11998E 50%, #2D1B69 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            gap: 0px; /* No gap initially */
+            align-items: center;
+            justify-content: center;
+            transition: all 0.5s ease;
+        }
+
+        .phone {
+            width: 360px;
+            height: 720px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            background: #180238;
+            transition: all 0.5s ease;
+        }
+
+        /* When navigation is active, show two phones with gap */
+        .container.nav-active {
+            gap: 60px;
+        }
+
+        .container.nav-active .phone {
+            width: 320px; /* Slightly smaller when both are showing */
+        }
+
+        .container.nav-active .nav-phone {
+            width: 320px; /* Match the main phone size */
+        }
+
+        /* Purple quarter circle with hamburger */
+        .purple-quarter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #CB88F7 0%, #770EF1 100%);
+            border-radius: 0 0 100% 0;
+            z-index: 5;
+        }
+
+        .hamburger {
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+
+        .hamburger::before,
+        .hamburger::after,
+        .hamburger {
+            width: 20px;
+            height: 2px;
+            background: white;
+            display: block;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+        }
+
+        .hamburger::before {
+            top: -6px;
+        }
+
+        .hamburger::after {
+            top: 6px;
+        }
+
+        /* Hamburger animation when active */
+        .hamburger.active {
+            background: transparent;
+        }
+
+        .hamburger.active::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .hamburger.active::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Main heading text */
+        .main-heading {
+            position: absolute;
+            top: 280px;
+            left: 35px;
+            right: 35px;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.1;
+            z-index: 10;
+        }
+
+        .main-heading .highlight {
+            color: #FF6347;
+        }
+
+        /* Orange semicircle */
+        .orange-semicircle {
+            position: absolute;
+            top: 160px;
+            right: -90px;
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #FC6F46 0%, #EB1C06 100%);
+            border-radius: 50%;
+            clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+            z-index: 3;
+        }
+
+        /* Cyan circle */
+        .cyan-circle {
+            position: absolute;
+            bottom: 187px;
+            left: 50px;
+            width: 90px;
+            height: 90px;
+            background: #00EDE8;
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        /* Yellow circle */
+        .yellow-circle {
+            position: absolute;
+            bottom: 164px;
+            right: 80px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #F6E05E 0%, #ECC94B 100%);
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        /* Small purple dot */
+        .purple-dot {
+            position: absolute;
+            bottom: 85px;
+            left: 80px;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #B794F6 0%, #9F7AEA 100%);
+            border-radius: 50%;
+            z-index: 8;
+        }
+
+        /* Navigation Phone - COMPLETELY HIDDEN initially */
+        .nav-phone {
+            width: 0px; /* Start with 0 width */
+            height: 720px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(180deg, #1A0643 0%, #3144A8 100%);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-100px) scale(0.8);
+            transition: all 0.5s ease;
+            order: -1; /* Appear on the left */
+            left: 59px;
+        }
+
+        .nav-phone.active {
+            width: 320px; /* Expand to full width */
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) scale(1);
+         
+        }
+
+
+        /* Navigation menu */
+        .navigation {
+            position: absolute;
+            top: 160px;
+            left: 35px;
+            right: 35px;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-list li {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-phone.active .nav-list li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .nav-phone.active .nav-list li:nth-child(1) { transition-delay: 0.2s; }
+        .nav-phone.active .nav-list li:nth-child(2) { transition-delay: 0.3s; }
+        .nav-phone.active .nav-list li:nth-child(3) { transition-delay: 0.4s; }
+        .nav-phone.active .nav-list li:nth-child(4) { transition-delay: 0.5s; }
+        .nav-phone.active .nav-list li:nth-child(5) { transition-delay: 0.6s; }
+
+        .nav-list a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 0;
+            border-left: 3px solid transparent;
+            padding-left: 15px;
+        }
+
+        .nav-list a:hover,
+        .nav-list a.active {
+            color: #FF6347;
+            border-left-color: #FF6347;
+            transform: translateX(10px);
+        }
+
+       
+
+       
+
+        /* Partial text on nav phone edge */
+        .partial-text {
+            position: absolute;
+            top: 280px;
+            right: -120px;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.1;
+            z-index: 1;
+        }
+
+        .partial-text .highlight {
+            color: #FF6347;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 0px;
+            }
+
+            .container.nav-active {
+                gap: 30px;
+            }
+
+            .phone,
+            .nav-phone.active {
+                width: 300px;
+                height: 600px;
+            }
+
+            .container.nav-active .phone {
+                width: 300px;
+            }
+
+            .main-heading {
+                font-size: 28px;
+                top: 240px;
+            }
+
+            .navigation {
+                top: 140px;
+            }
+
+            .nav-list a {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .phone,
+            .nav-phone.active {
+                width: 280px;
+                height: 560px;
+            }
+
+            .container.nav-active .phone {
+                width: 280px;
+            }
+
+            .main-heading {
+                font-size: 24px;
+                top: 220px;
+            }
+
+            .navigation {
+                top: 120px;
+            }
+
+            .nav-list li {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <!-- Navigation Phone (COMPLETELY HIDDEN initially, appears on LEFT when active) -->
+        <div class="nav-phone" id="navPhone">
+            <!-- Red hamburger button -->
+            <div class="nav-hamburger">
+                <span></span>
+            </div>
+            
+            <!-- Navigation menu -->
+            <nav class="navigation">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">HOME</a></li>
+                    <li><a href="#company" class="nav-link">COMPANY</a></li>
+                    <li><a href="#case-studies" class="nav-link">CASE STUDIES</a></li>
+                    <li><a href="#blog" class="nav-link">BLOG</a></li>
+                    <li><a href="#contact" class="nav-link">CONTACT</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Geometric shapes -->
+            <div class="nav-purple-cylinder"></div>
+            <div class="nav-cyan-quarter"></div>
+            
+            <!-- Partial text -->
+            <div class="partial-text">
+                We bu<br>
+                & w
+            </div>
+        </div>
+
+        <!-- Main Phone (Always Visible) -->
+        <div class="phone">
+            <!-- Purple quarter circle with hamburger -->
+            <div class="purple-quarter"></div>
+            
+            <!-- Interactive hamburger menu -->
+            <div class="hamburger" id="hamburger"></div>
+            
+            <!-- Main heading text -->
+            <div class="main-heading">
+                We build better <span class="highlight">mobile</span><br>
+                & web experiences
+            </div>
+            
+            <!-- Geometric shapes -->
+            <div class="orange-semicircle"></div>
+            <div class="cyan-circle"></div>
+            <div class="yellow-circle"></div>
+            <div class="purple-dot"></div>
+            
+            <!-- Divider line -->
+            <div class="divider"></div>
+            
+            <!-- Bottom section geometric shapes -->
+            <div class="purple-cylinder"></div>
+            <div class="cyan-quarter"></div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation functionality
+        const hamburger = document.getElementById('hamburger');
+        const container = document.getElementById('container');
+        const navPhone = document.getElementById('navPhone');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        let navOpen = false;
+
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleNavigation();
+        });
+
+        function toggleNavigation() {
+            navOpen = !navOpen;
+            
+            if (navOpen) {
+                hamburger.classList.add('active');
+                container.classList.add('nav-active');
+                navPhone.classList.add('active');
+            } else {
+                hamburger.classList.remove('active');
+                container.classList.remove('nav-active');
+                navPhone.classList.remove('active');
+            }
+        }
+
+        // Nav links - highlight selected item
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Remove active class from all links
+                navLinks.forEach(l => l.classList.remove('active'));
+                // Add active class to clicked link
+                this.classList.add('active');
+                // Keep navigation open
+            });
+        });
+
+        // Close navigation when clicking outside
+        document.addEventListener('click', function(e) {
+            if (navOpen && !navPhone.contains(e.target) && !hamburger.contains(e.target)) {
+                toggleNavigation();
+            }
+        });
+
+        // Prevent navigation from closing when clicking inside nav phone
+        navPhone.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
