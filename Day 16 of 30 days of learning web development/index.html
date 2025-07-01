@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #eef2f9;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .card {
+      background: linear-gradient(to bottom, #f3f7ff 0%, #ffffff 60%);
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 8px 24px rgb(148 163 184 / 0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .header {
+      padding: 48px 24px 24px;
+      text-align: center;
+      color: #3b6af2; /* blue color */
+    }
+    .header h1 {
+      font-weight: 800;
+      font-size: 3rem;
+      margin: 0;
+      line-height: 1;
+    }
+    .header p {
+      font-weight: 500;
+      font-size: 0.875rem;
+      margin-top: 8px;
+      opacity: 0.6;
+    }
+    .btn-trial {
+      background: #718aca;
+      color: white;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      cursor: pointer;
+      margin: 16px auto 32px;
+      display: inline-block;
+      user-select: none;
+      transition: background-color 0.3s ease;
+      border: none;
+    }
+    .btn-trial:hover {
+      background-color: #5670cc;
+    }
+    .features {
+      text-align: center;
+      color: #718aca;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .features a {
+      color: #718aca;
+      text-decoration: none;
+      display: block;
+      margin-top: 8px;
+      transition: color 0.3s ease;
+    }
+    .features a:hover {
+      color: #3b6af2;
+    }
+    .purchase-btn {
+      background: linear-gradient(90deg, #4b73f2 0%, #2c4edb 100%);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 0;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      border: none;
+      border-radius: 0 0 12px 12px;
+      transition: background-color 0.3s ease;
+    }
+    .purchase-btn:hover {
+      background: linear-gradient(90deg, #3b5ade 0%, #1a39bd 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" role="region" aria-label="Pricing card for 14 dollar plan">
+    <header class="header">
+      <h1>14$</h1>
+      <p>After 14 days free trial</p>
+    </header>
+    <button class="btn-trial" aria-label="Start free trial">START FREE TRIAL</button>
+    <section class="features" aria-label="Plan features">
+      <p>250MB additional storage</p>
+      <p>125 projects approximately</p>
+      <a href="#" tabindex="0" aria-label="Activity panel details">Activity panel</a>
+      <a href="#" tabindex="0" aria-label="Storage panel details">Storage panel</a>
+      <a href="#" tabindex="0" aria-label="Duplicating projects details">Duplicating projects</a>
+    </section>
+    <button class="purchase-btn" aria-label="Purchase plan for 14 dollars">PURCHASE</button>
+  </div>
+</body>
+</html>
+
