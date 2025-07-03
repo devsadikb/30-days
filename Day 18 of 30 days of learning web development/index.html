@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Server Monitoring Dashboard</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap');
+  /* Custom fonts */
+  body {
+    font-family: 'Rubik', sans-serif;
+    background: #2a148f;
+    margin: 0;
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .card {
+    background: linear-gradient(135deg, #6f00ff 10%, #4400cc 90%);
+    border-radius: 1rem;
+    box-shadow:
+      0 0 40px 10px rgba(111, 0, 255, 0.6),
+      inset 0 0 10px 3px rgba(255 255 255 / 0.1);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255 255 255 / 0.15);
+  }
+
+  .header svg {
+    cursor: pointer;
+    stroke: #ddd;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: stroke 0.3s;
+  }
+
+  .header svg:hover {
+    stroke: #ff59cc;
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  /* Left side graph */
+  .graph-section {
+    flex: 2;
+    position: relative;
+    background: linear-gradient(135deg, #4c009d, #160038);
+    border-radius: 1rem;
+    padding: 1rem 2rem 1rem 3rem;
+    box-shadow: inset 0 0 20px 2px #ff59cc44;
+  }
+
+  .graph-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  svg.graph {
+    width: 100%;
+    height: 220px;
+  }
+
+  /* X-axis labels */
+  .x-labels {
+    position: absolute;
+    bottom: 1rem;
+    left: 3rem;
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #aaaef7;
+    user-select:none;
+  }
+
+  .y-labels {
+    position: absolute;
+    top: 1.4rem;
+    left: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 210px;
+    font-size: 0.7rem;
+    user-select:none;
+    color: #aaaef7;
+  }
+
+  /* Right side stat box */
+  .stats-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ff258f, #ffa938);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 16px 3px rgba(255, 89, 204, 0.5);
+  }
+
+  .stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #ff59cc, #ff7a61);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    box-shadow:
+      0 0 12px 3px #ff59cc77,
+      inset 0 0 8px #fff3f8;
+  }
+
+  .stat-icon.blue {
+    background: linear-gradient(135deg, #3ac9ff, #68dfff);
+    box-shadow:
+      0 0 12px 3px #3ac9ff77,
+      inset 0 0 8px #d4f7ff;
+  }
+
+  .stat-icon.purple {
+    background: linear-gradient(135deg, #a172ff, #c279ff);
+    box-shadow:
+      0 0 12px 3px #a172ff77,
+      inset 0 0 8px #e2ccff;
+  }
+
+  .stat-icon.orange {
+    background: linear-gradient(135deg, #ffbf44, #ffa63e);
+    box-shadow:
+      0 0 12px 3px #ffbf4477,
+      inset 0 0 8px #fff2cc;
+  }
+
+  .stat-content {
+    color: white;
+    font-weight: 700;
+    user-select:none;
+  }
+
+  .stat-number {
+    font-size: 1.4rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  /* Bottom section */
+  .bottom-section {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+
+  .bottom-card {
+    background: linear-gradient(135deg, #3a0073 10%, #12002b 90%);
+    flex: 1;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow:
+      0 0 18px 3px #6f00ff77,
+      inset 0 0 12px 2px #9228ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bottom-header {
+    width: 100%;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: #ddd1f9;
+  }
+
+  .tooltip {
+    margin-left: 0.3rem;
+    cursor: help;
+    font-weight: 800;
+    user-select:none;
+    color: #9f7fff;
+  }
+
+  /* Circular progress for transaction overview */
+  .circle-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+  }
+
+  .circle-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 3rem;
+    color: #88b3ff;
+    text-shadow: 0 0 8px #a0b8ffdd;
+    user-select:none;
+  }
+
+  /* Plugin overview arcs */
+  svg.plugins-svg {
+    width: 140px;
+    height: 140px;
+    overflow: visible;
+  }
+
+  /* Throughput overview radar chart */
+  svg.throughput-svg {
+    width: 180px;
+    height: 140px;
+  }
+
+  /* Legend for plugins */
+  .plugin-legend {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    line-height: 1.1rem;
+    user-select:none;
+    color: #999;
+  }
+
+  .plugin-legend span {
+    margin-right: 0.3rem;
+    cursor: default;
+  }
+  .plugin-legend .mysql { color: #ff258f;}
+  .plugin-legend .mongodb { color: #ffa938;}
+  .plugin-legend .redis { color: #ff59cc;}
+  .plugin-legend .http { color: #d67cff;}
+  .plugin-legend .docker { color: #a172ff;}
+  .plugin-legend .nginx { color: #6f00ff;}
+  /* Legend for throughput */
+  .throughput-legend {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    line-height: 1.1rem;
+    user-select:none;
+    color: #bbb;
+  }
+  .throughput-legend span {
+    margin-right: 0.5rem;
+    cursor: default;
+  }
+  .throughput-legend .expressjs { color: #ff59cc;}
+  .throughput-legend .expressghost { color: #3ac9ff;}
+  .throughput-legend .expresscss { color: #ff7a61;}
+
+  /* Responsive tweaks */
+  @media (max-width: 900px) {
+    .content {
+      flex-direction: column;
+    }
+    .graph-section, .stats-box {
+      flex: unset;
+      width: 100%;
+    }
+    .bottom-section {
+      flex-direction: column;
+    }
+    .bottom-card {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+<main class="card max-w-6xl mx-auto">
+  <header class="header" aria-label="Dashboard header">
+    <div>Server Monitoring</div>
+    <div class="flex space-x-4" role="group" aria-label="Controls">
+      <!-- Reload icon -->
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-label="Reload" tabindex="0" role="button" aria-pressed="false">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582M20 20v-5h-.581M5.636 6.636A8 8 0 1118.364 17.364"/>
+      </svg>
+      <!-- Power off icon -->
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-label="Power off" tabindex="0" role="button" aria-pressed="false">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v10m0 4a8 8 0 11-8-8"/>
+      </svg>
+    </div>
+  </header>
+
+  <section class="content" aria-label="Main content with graph and stats">
+    <section class="graph-section" aria-labelledby="graph-title">
+      <h2 id="graph-title" class="graph-title">Server Monitoring</h2>
+      <div class="y-labels" aria-hidden="true">
+        <span>600</span>
+        <span>500</span>
+        <span>400</span>
+        <span>300</span>
+        <span>200</span>
+        <span>100</span>
+        <span>0</span>
+      </div>
+      <svg class="graph" viewBox="0 0 700 250" role="img" aria-label="Line graph showing server activity from Monday to Sunday">
+        <defs>
+          <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#37f5f7"/>
+            <stop offset="35%" stop-color="#fff746"/>
+            <stop offset="60%" stop-color="#ffb254"/>
+            <stop offset="100%" stop-color="#ff4d6d"/>
+          </linearGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%" >
+            <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#fff746"/>
+          </filter>
+        </defs>
+        <path
+          fill="none"
+          stroke="url(#gradient)"
+          stroke-width="5"
+          filter="url(#glow)"
+          d="
+          M 70 190
+          C 110 130, 140 80, 200 140
+          C 260 200, 320 70, 370 190
+          C 420 310, 480 150, 550 190
+          C 600 220, 660 170 700 140
+          "
+          />
+        <!-- Highlight circle on Friday -->
+        <circle cx="550" cy="190" r="12" fill="#ff7a61" style="filter: drop-shadow(0 0 9px #ff7a61aa)" />
+        <circle cx="550" cy="190" r="5" fill="#fff" />
+      </svg>
+      <div class="x-labels" aria-hidden="true">
+        <span>MON</span>
+        <span>TUE</span>
+        <span>WED</span>
+        <span>THU</span>
+        <span>FRI</span>
+        <span>SAT</span>
+        <span>SUN</span>
+      </div>
+    </section>
+
+    <aside class="stats-box" aria-label="Key performance indicators">
+      <div class="stat-item" role="group" aria-labelledby="resp-title resp-desc">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.6" />
+            <path d="M12 6v6l4 2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div id="resp-title" class="stat-number">6.8s</div>
+          <div id="resp-desc" class="stat-label">Response time</div>
+        </div>
+      </div>
+      <div class="stat-item" role="group" aria-labelledby="throughput-title throughput-desc" >
+        <div class="stat-icon blue">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+            <rect x="3" y="12" width="4" height="8" rx="1" ry="1" />
+            <rect x="9" y="8" width="4" height="12" rx="1" ry="1" />
+            <rect x="15" y="16" width="4" height="4" rx="1" ry="1" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div id="throughput-title" class="stat-number">31w</div>
+          <div id="throughput-desc" class="stat-label">Throughput</div>
+        </div>
+      </div>
+      <div class="stat-item" role="group" aria-labelledby="apdex-title apdex-desc">
+        <div class="stat-icon purple">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+            <path d="M12 12c2 2 4 2 4 2-1 0-1 3-4 3-3 0-4-3-4-3s2-1 4-2z" />
+            <circle cx="12" cy="8" r="3" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div id="apdex-title" class="stat-number">0.92</div>
+          <div id="apdex-desc" class="stat-label">Apdex</div>
+        </div>
+      </div>
+      <div class="stat-item" role="group" aria-labelledby="error-title error-desc">
+        <div class="stat-icon orange">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24">
+            <circle cx="12" cy="12" r="9" stroke-opacity="0.7"/>
+            <line x1="12" y1="7" x2="12" y2="13" stroke-linecap="round"/>
+            <circle cx="12" cy="17" r="1.25" />
+          </svg>
+        </div>
+        <div class="stat-content">
+          <div id="error-title" class="stat-number">0.052‰</div>
+          <div id="error-desc" class="stat-label">Error rate</div>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="bottom-section" aria-label="Detailed overviews">
+    <section class="bottom-card" aria-labelledby="trans-ov-title" role="region">
+      <h3 id="trans-ov-title" class="bottom-header">
+        Transaction overview
+        <span class="tooltip" aria-label="Help: overall status of transactions monitored">?</span>
+      </h3>
+      <div class="circle-container" role="img" aria-label="Circular progress showing transaction completeness at 68%">
+        <svg viewBox="0 0 140 140" width="140" height="140" aria-hidden="true" role="presentation" >
+          <circle cx="70" cy="70" r="60" stroke="#2486ff33" stroke-width="8" fill="none" />
+          <circle cx="70" cy="70" r="60" stroke="#36c2ff" stroke-width="8" fill="none"
+            stroke-dasharray="377" stroke-dashoffset="121.04" stroke-linecap="round" />
+        </svg>
+        <div class="circle-text">68</div>
+      </div>
+    </section>
+
+    <section class="bottom-card" aria-labelledby="plugin-ov-title" role="region">
+      <h3 id="plugin-ov-title" class="bottom-header">
+        Plugin overview
+        <span class="tooltip" aria-label="Help: usage overview for various software plugins">?</span>
+      </h3>
+      <svg class="plugins-svg" viewBox="0 0 140 140">
+        <!-- Segmented arcs for MYSQL, MONGODB, REDIS, HTTP, DOCKER, NGINX -->
+        <g>
+          <!-- Base circle -->
+          <circle cx="70" cy="70" r="60" stroke="#382c45" stroke-width="8" fill="none" />
+          <!-- MYSQL arc -->
+          <path d="M130 70 A60 60 0 0 1 90 125" fill="none" stroke="#ff258f" stroke-width="8" />
+          <!-- MONGODB arc -->
+          <path d="M90 125 A60 60 0 0 1 35 95" fill="none" stroke="#ffa938" stroke-width="8" />
+          <!-- REDIS arc -->
+          <path d="M35 95 A60 60 0 0 1 20 40" fill="none" stroke="#ff59cc" stroke-width="8" />
+          <!-- HTTP arc -->
+          <path d="M20 40 A60 60 0 0 1 40 15" fill="none" stroke="#d67cff" stroke-width="8" />
+          <!-- DOCKER arc -->
+          <path d="M40 15 A60 60 0 0 1 85 15" fill="none" stroke="#a172ff" stroke-width="8" />
+          <!-- NGINX arc -->
+          <path d="M85 15 A60 60 0 0 1 130 70" fill="none" stroke="#6f00ff" stroke-width="8" />
+        </g>
+      </svg>
+      <div class="plugin-legend" aria-label="Plugins legend">
+        <span class="mysql">● MYSQL</span>
+        <span class="mongodb">● MONGODB</span>
+        <span class="redis">● REDIS</span>
+        <span class="http">● HTTP</span>
+        <span class="docker">● DOCKER</span>
+        <span class="nginx">● NGINX</span>
+      </div>
+    </section>
+
+    <section class="bottom-card" aria-labelledby="throughput-ov-title" role="region">
+      <h3 id="throughput-ov-title" class="bottom-header">
+        Throughput overview
+        <span class="tooltip" aria-label="Help: analysis of different express frameworks throughput">?</span>
+      </h3>
+      <svg class="throughput-svg" viewBox="0 0 180 140" role="img" aria-label="Radar chart showing throughput overview">
+        <defs>
+          <linearGradient id="expressjs" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="10%" stop-color="#ff59cc" />
+            <stop offset="90%" stop-color="#ff7a61" />
+          </linearGradient>
+          <linearGradient id="expressghost" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="20%" stop-color="#3ac9ff" />
+            <stop offset="75%" stop-color="#68dfff" />
+          </linearGradient>
+          <linearGradient id="expresscss" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="15%" stop-color="#ff7a61" />
+            <stop offset="75%" stop-color="#ffbc9a" />
+          </linearGradient>
+        </defs>
+        <!-- Spider web background -->
+        <polygon points="90,5 155,50 155,115 90,160 25,115 25,50" fill="none" stroke="#6f00ff77" stroke-width="1"/>
+        <polygon points="90,20 145,55 145,105 90,140 35,105 35,55" fill="none" stroke="#6f00ff55" stroke-width="1"/>
+        <!-- Data lines -->
+        <!-- Expressjs -->
+        <path fill="url(#expressjs)" fill-opacity="0.3" stroke="url(#expressjs)" stroke-width="2" transform="translate(0,5)" d="M90,10 L150,55 L120,115 L70,140 L20,115 L55,55 Z"/>
+        <!-- Expressghost -->
+        <path fill="url(#expressghost)" fill-opacity="0.3" stroke="url(#expressghost)" stroke-width="2" transform="translate(0,5)" d="M90,40 L140,65 L130,100 L80,135 L60,100 L50,65 Z"/>
+        <!-- Expresscss -->
+        <path fill="url(#expresscss)" fill-opacity="0.3" stroke="url(#expresscss)" stroke-width="2" transform="translate(0,5)" d="M90,55 L145,75 L135,110 L75,120 L50,105 L55,70 Z"/>
+        <!-- Circles at vertices for each dataset -->
+        <!-- Expressjs -->
+        <circle cx="90" cy="15" r="4" fill="#ff59cc"/>
+        <circle cx="150" cy="60" r="4" fill="#ff59cc"/>
+        <circle cx="120" cy="120" r="4" fill="#ff59cc"/>
+        <circle cx="70" cy="145" r="4" fill="#ff59cc"/>
+        <circle cx="20" cy="120" r="4" fill="#ff59cc"/>
+        <circle cx="55" cy="60" r="4" fill="#ff59cc"/>
+        <!-- Expressghost -->
+        <circle cx="90" cy="45" r="4" fill="#3ac9ff"/>
+        <circle cx="140" cy="70" r="4" fill="#3ac9ff"/>
+        <circle cx="130" cy="105" r="4" fill="#3ac9ff"/>
+        <circle cx="80" cy="140" r="4" fill="#3ac9ff"/>
+        <circle cx="60" cy="105" r="4" fill="#3ac9ff"/>
+        <circle cx="50" cy="70" r="4" fill="#3ac9ff"/>
+        <!-- Expresscss -->
+        <circle cx="90" cy="60" r="4" fill="#ff7a61"/>
+        <circle cx="145" cy="80" r="4" fill="#ff7a61"/>
+        <circle cx="135" cy="115" r="4" fill="#ff7a61"/>
+        <circle cx="75" cy="125" r="4" fill="#ff7a61"/>
+        <circle cx="50" cy="110" r="4" fill="#ff7a61"/>
+        <circle cx="55" cy="75" r="4" fill="#ff7a61"/>
+      </svg>
+      <div class="throughput-legend" aria-label="Throughput legend">
+        <span class="expressjs">● EXPRESSjs</span>
+        <span class="expressghost">● EXPRESSghost</span>
+        <span class="expresscss">● EXPRESScss</span>
+      </div>
+    </section>
+
+  </section>
+</main>
+</body>
+</html>
+
