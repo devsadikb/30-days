@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Startup Directory | Y Combinator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      margin: 0; 
+      background: #f9fafb; 
+      color: #111827;
+      line-height: 1.4;
+    }
+    
+    .navbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 65px;
+    }
+    
+    .nav-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      text-decoration: none;
+    }
+    
+    .nav-logo svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 0;
+      transition: transform 0.2s ease;
+    }
+    
+    .nav-logo:hover svg {
+      transform: scale(1.1);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-links a {
+      color: #4b5563;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    
+    .nav-links a:hover {
+      color: #ff6600;
+    }
+    
+    .apply-btn {
+      background: #ff6600;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .apply-btn:hover {
+      background: #e55a00;
+    }
+    
+    header { 
+      background: #f9fafb; 
+      color: #111827; 
+      padding: 2.5rem 0; 
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .header-title {
+      font-size: 2.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #111827;
+      line-height: 1.2;
+    }
+    
+    .header-subtitle {
+      font-size: 1.125rem;
+      color: #4b5563;
+      margin-bottom: 1rem;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+    
+    .header-stats {
+      font-size: 1.125rem;
+      color: #4b5563;
+      margin-bottom: 0;
+      line-height: 1.5;
+    }
+    
+    .header-link {
+      color: #ff6600;
+      text-decoration: none;
+    }
+    
+    .header-link:hover {
+      text-decoration: underline;
+    }
+    
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 2rem;
+    }
+    
+    .sidebar {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 90px;
+      width: 360px;
+      float: left;
+      box-sizing: border-box;
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+    }
+    
+    .main-content {
+      margin-left: 380px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-sizing: border-box;
+    }
+    
+    .search-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .search-filter-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      color: #9ca3af;
+      pointer-events: none;
+    }
+    
+    .search-bar { 
+      width: 100%; 
+      padding: 12px 16px 12px 38px;
+      border: 1px solid #d1d5db; 
+      border-radius: 6px; 
+      font-size: 1rem;
+      background: white;
+    }
+    
+    .search-bar:focus {
+      outline: none;
+      border-color: #ff6600;
+      box-shadow: 0 0 0 1px #ff6600;
+    }
+    
+    .filter-group {
+      margin-bottom: 1.25rem;
+    }
+    
+    .filter-label {
+      font-weight: 600;
+      font-size: 0.8125rem;
+      color: #111827;
+      margin-bottom: 0.5rem;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+    
+    .filter-select {
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: white;
+      font-size: 0.875rem;
+      color: #374151;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+      width: 100%;
+    }
+    
+    .filter-select:focus {
+      outline: none;
+      border-color: #ff6600;
+      box-shadow: 0 0 0 1px #ff6600;
+    }
+    
+    .sort-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .sort-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 10px;
+      text-align: left;
+      font-size: 0.875rem;
+      color: #374151;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-weight: 400;
+    }
+    
+    .sort-btn:hover {
+      background: #f3f4f6;
+    }
+    
+    .sort-btn.active {
+      background: #f3f4f6;
+      color: #111827;
+      font-weight: 500;
+    }
+    
+    .sort-btn.active::before {
+      content: "•";
+      margin-right: 8px;
+      color: #ff6600;
+      font-weight: bold;
+    }
+    
+    .filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .filter-option {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin: 2px 0;
+    }
+    
+    .filter-checkbox {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    .filter-option-label {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+      color: #374151;
+      cursor: pointer;
+      width: 100%;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    
+    .filter-option-label:hover {
+      background-color: #f3f4f6;
+    }
+    
+    .filter-option-label:before {
+      content: "";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #d1d5db;
+      border-radius: 3px;
+      margin-right: 8px;
+      background-color: white;
+      flex-shrink: 0;
+    }
+    
+    .filter-checkbox:checked + .filter-option-label:before {
+      background-color: #ff6600;
+      border-color: #ff6600;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3e%3cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 1.414-1.414L8 12.586l7.293-7.293a1 1 0 0 1 1.414 0z' clip-rule='evenodd'/%3e%3c/svg%3e");
+      background-size: 12px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .filter-count {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #6b7280;
+      background: #f3f4f6;
+      padding: 1px 6px;
+      border-radius: 9999px;
+    }
+    
+    .filter-dropdown-toggle {
+      font-size: 0.8125rem;
+      color: #ff6600;
+      cursor: pointer;
+      margin-top: 4px;
+      padding-left: 26px;
+    }
+    
+    .filter-dropdown-toggle:hover {
+      text-decoration: underline;
+    }
+    
+    .company-list { 
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+      max-height: 100%;
+    }
+    
+    .company-card { 
+      background: #fff; 
+      padding: 12px; 
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+    }
+    
+    .company-card:hover {
+      background: #f8fafc;
+    }
+    
+    .company-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .company-logo { 
+      width: 48px; 
+      height: 48px; 
+      object-fit: cover; 
+      border-radius: 4px; 
+      background: #f3f4f6;
+      flex-shrink: 0;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .company-logo svg {
+      width: 32px;
+      height: 32px;
+    }
+    
+    .company-info {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .company-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      color: #111827;
+      line-height: 1.25;
+    }
+    
+    .company-tagline {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0;
+      line-height: 1.25;
+    }
+    
+    .company-description { 
+      font-size: 0.875rem; 
+      color: #374151;
+      line-height: 1.5;
+      margin: 0 0 16px 0;
+    }
+    
+    .company-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+    
+    .company-meta span {
+      background: #f3f4f6;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 500;
+    }
+    
+    .batch-tag { 
+      background: #fef3c7 !important;
+      color: #92400e !important;
+    }
+    
+    .hiring-tag {
+      background: #d1fae5 !important;
+      color: #065f46 !important;
+    }
+    
+    .footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: 48px 0 24px;
+      margin-top: 64px;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-section h4 {
+      margin-bottom: 16px;
+      color: #111827;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+    
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .footer-section li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-section a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 0.875rem;
+      line-height: 1.25;
+    }
+    
+    .footer-section a:hover {
+      color: #ff6600;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .header-title {
+        font-size: 2rem;
+      }
+      
+      .sort-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      
+      .filters-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .company-list { 
+        grid-template-columns: 1fr; 
+      }
+      
+      .container {
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="2" fill="#FF6600"/>
+          <path d="M8 6L12 12L16 6H19L13 14V19H11V14L5 6H8Z" fill="white"/>
+        </svg>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Companies</a></li>
+        <li><a href="#">Startup Jobs</a></li>
+        <li><a href="#">Find a Co-Founder</a></li>
+        <li><a href="#">Library</a></li>
+        <li><a href="#">SAFE</a></li>
+        <li><a href="#">Resources</a></li>
+      </ul>
+      <a href="#" class="apply-btn">Apply</a>
+    </div>
+  </nav>
+  
+  <header>
+    <div class="header-content">
+      <h1 class="header-title">Startup Directory</h1>
+      <p class="header-subtitle">
+        Since 2005, we have invested in over 5,000 companies that have a combined valuation of over $800B.
+      </p>
+      <p class="header-stats">
+        To find jobs at these startups, visit <a href="#" class="header-link">Work at a Startup</a>.
+      </p>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="search-section" style="max-width:700px;margin:2rem auto 1.5rem auto;">
+      <div class="search-filter-group">
+        <svg aria-hidden="true" class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input id="search-input" class="search-bar" type="text" placeholder="Search by company name, founder, or tag" onkeyup="applyFilters()">
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div class="sidebar-filters" style="width:260px;float:left;padding-right:2rem;box-sizing:border-box;">
+        <div class="filter-group">
+          <label class="filter-label">Show</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.75rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="show-top" class="filter-checkbox" checked>
+              <label for="show-top" class="filter-option-label">💎 Top Companies <span class="filter-count">84</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="show-hiring" class="filter-checkbox">
+              <label for="show-hiring" class="filter-option-label">Is Hiring <span class="filter-count">401</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="show-nonprofit" class="filter-checkbox">
+              <label for="show-nonprofit" class="filter-option-label">Nonprofit <span class="filter-count">11</span></label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Batch</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.5rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="batch-all" class="filter-checkbox" checked>
+              <label for="batch-all" class="filter-option-label">All batches <span class="filter-count">1159</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-s25" class="filter-checkbox">
+              <label for="batch-s25" class="filter-option-label">Summer 2025</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-sp25" class="filter-checkbox">
+              <label for="batch-sp25" class="filter-option-label">Spring 2025</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-w25" class="filter-checkbox">
+              <label for="batch-w25" class="filter-option-label">Winter 2025</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-f24" class="filter-checkbox">
+              <label for="batch-f24" class="filter-option-label">Fall 2024</label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-s24" class="filter-checkbox">
+              <label for="batch-s24" class="filter-option-label">Summer 2024 <span class="filter-count">2</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-w24" class="filter-checkbox">
+              <label for="batch-w24" class="filter-option-label">Winter 2024 <span class="filter-count">4</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="batch-s23" class="filter-checkbox">
+              <label for="batch-s23" class="filter-option-label">Summer 2023 <span class="filter-count">7</span></label>
+            </div>
+            <div class="filter-dropdown-toggle">See all options</div>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Industry</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.5rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="industry-all" class="filter-checkbox" checked>
+              <label for="industry-all" class="filter-option-label">All industries <span class="filter-count">1159</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-b2b" class="filter-checkbox">
+              <label for="industry-b2b" class="filter-option-label">B2B <span class="filter-count">502</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-fintech" class="filter-checkbox">
+              <label for="industry-fintech" class="filter-option-label">Fintech <span class="filter-count">177</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-consumer" class="filter-checkbox">
+              <label for="industry-consumer" class="filter-option-label">Consumer <span class="filter-count">174</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-healthcare" class="filter-checkbox">
+              <label for="industry-healthcare" class="filter-option-label">Healthcare <span class="filter-count">134</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-industrial" class="filter-checkbox">
+              <label for="industry-industrial" class="filter-option-label">Industrials <span class="filter-count">71</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-education" class="filter-checkbox">
+              <label for="industry-education" class="filter-option-label">Education <span class="filter-count">46</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="industry-real-estate" class="filter-checkbox">
+              <label for="industry-real-estate" class="filter-option-label">Real Estate and Construction <span class="filter-count">45</span></label>
+            </div>
+            <div class="filter-dropdown-toggle">See all options</div>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Region</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.5rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="region-all" class="filter-checkbox" checked>
+              <label for="region-all" class="filter-option-label">Anywhere <span class="filter-count">1159</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-remote" class="filter-checkbox">
+              <label for="region-remote" class="filter-option-label">Remote <span class="filter-count">908</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-america" class="filter-checkbox">
+              <label for="region-america" class="filter-option-label">America / Canada <span class="filter-count">758</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-latam" class="filter-checkbox">
+              <label for="region-latam" class="filter-option-label">Latin America <span class="filter-count">115</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-south-asia" class="filter-checkbox">
+              <label for="region-south-asia" class="filter-option-label">South Asia <span class="filter-count">98</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-europe" class="filter-checkbox">
+              <label for="region-europe" class="filter-option-label">Europe <span class="filter-count">80</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-southeast-asia" class="filter-checkbox">
+              <label for="region-southeast-asia" class="filter-option-label">Southeast Asia <span class="filter-count">48</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-africa" class="filter-checkbox">
+              <label for="region-africa" class="filter-option-label">Africa <span class="filter-count">39</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-mena" class="filter-checkbox">
+              <label for="region-mena" class="filter-option-label">Middle East and North Africa <span class="filter-count">28</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-east-asia" class="filter-checkbox">
+              <label for="region-east-asia" class="filter-option-label">East Asia <span class="filter-count">11</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="region-oceania" class="filter-checkbox">
+              <label for="region-oceania" class="filter-option-label">Oceania <span class="filter-count">2</span></label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Company Size</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.5rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="size-all" class="filter-checkbox" checked>
+              <label for="size-all" class="filter-option-label">1 - 1,000+</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Videos & Info</label>
+          <div class="filter-options" style="flex-direction:column;gap:0.5rem;">
+            <div class="filter-option">
+              <input type="checkbox" id="has-demo" class="filter-checkbox">
+              <label for="has-demo" class="filter-option-label">Public Demo Day Video <span class="filter-count">61</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="has-bonus" class="filter-checkbox">
+              <label for="has-bonus" class="filter-option-label">Has Bonus Questions <span class="filter-count">51</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="has-answers" class="filter-checkbox">
+              <label for="has-answers" class="filter-option-label">Has Application Answers <span class="filter-count">25</span></label>
+            </div>
+            <div class="filter-option">
+              <input type="checkbox" id="has-application-video" class="filter-checkbox">
+              <label for="has-application-video" class="filter-option-label">Public Application Video <span class="filter-count">17</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left: -16px;
+    flex: 1;
+">
+        <div class="company-list" id="companyList">
+          <!-- Y Combinator Companies -->
+          <div class="company-card" data-batch="W24" data-industry="AI">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#4285f4"/>
+                  <path d="M24 12L32 20L24 28L16 20L24 12Z" fill="white"/>
+                  <circle cx="24" cy="24" r="3" fill="#4285f4"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">OpenAI</h3>
+                <p class="company-tagline">AI for everyone</p>
+              </div>
+            </div>
+            <p class="company-description">Creating safe artificial general intelligence that benefits all of humanity through advanced AI research and development.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>AI</span>
+              <span>San Francisco</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Healthcare">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#34a853"/>
+                  <path d="M24 16V32M16 24H32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="24" cy="24" r="12" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">HealthSync</h3>
+                <p class="company-tagline">Digital health platform</p>
+              </div>
+            </div>
+            <p class="company-description">Connecting patients and doctors through innovative telemedicine solutions and AI-powered health monitoring.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span>Healthcare</span>
+              <span>New York</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Fintech">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ea4335"/>
+                  <path d="M18 20L24 14L30 20M18 28L24 34L30 28" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="20" y="22" width="8" height="4" fill="white" rx="1"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">FinFlow</h3>
+                <p class="company-tagline">Next-gen banking</p>
+              </div>
+            </div>
+            <p class="company-description">Revolutionizing personal finance with AI-powered budgeting, investment advice, and seamless banking experiences.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Fintech</span>
+              <span>Miami</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Education">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#fbbc04"/>
+                  <path d="M24 16L32 20L24 24L16 20L24 16Z" fill="white"/>
+                  <path d="M16 20V28L24 32L32 28V20" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">LearnLab</h3>
+                <p class="company-tagline">Personalized learning</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered personalized learning platform that adapts to each student's pace and learning style.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Education</span>
+              <span>Boston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="E-commerce">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#9c27b0"/>
+                  <path d="M16 18H32L30 28H18L16 18Z" stroke="white" stroke-width="2" fill="none"/>
+                  <circle cx="20" cy="32" r="2" fill="white"/>
+                  <circle cx="28" cy="32" r="2" fill="white"/>
+                  <path d="M14 14H16L16 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">ShopSmart</h3>
+                <p class="company-tagline">Smart shopping assistant</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered shopping assistant that helps users find the best deals and products across multiple platforms.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>E-commerce</span>
+              <span>Seattle</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Climate">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#4caf50"/>
+                  <path d="M24 36C30 36 36 24 24 12C12 24 18 36 24 36Z" fill="white"/>
+                  <circle cx="24" cy="24" r="6" fill="#4caf50"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">ClimateAI</h3>
+                <p class="company-tagline">Climate intelligence</p>
+              </div>
+            </div>
+            <p class="company-description">Using AI to predict and mitigate climate risks for businesses and governments worldwide.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Climate</span>
+              <span>Portland</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Productivity">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff5722"/>
+                  <rect x="12" y="20" width="24" height="8" rx="2" fill="white"/>
+                  <rect x="20" y="12" width="8" height="24" rx="2" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">ProFlow</h3>
+                <p class="company-tagline">Workflow automation</p>
+              </div>
+            </div>
+            <p class="company-description">No-code workflow automation platform that helps teams streamline repetitive tasks and boost productivity.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>Productivity</span>
+              <span>Chicago</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Security">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#f44336"/>
+                  <rect x="16" y="20" width="16" height="12" rx="3" fill="white"/>
+                  <circle cx="24" cy="26" r="3" fill="#f44336"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">SecureNet</h3>
+                <p class="company-tagline">Cybersecurity platform</p>
+              </div>
+            </div>
+            <p class="company-description">Advanced cybersecurity solutions protecting businesses from evolving digital threats with AI-powered detection.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Security</span>
+              <span>Denver</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="AI">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#4285f4"/>
+                  <path d="M24 12L32 20L24 28L16 20L24 12Z" fill="white"/>
+                  <circle cx="24" cy="24" r="3" fill="#4285f4"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">DataFlow</h3>
+                <p class="company-tagline">Machine learning platform</p>
+              </div>
+            </div>
+            <p class="company-description">Streamlining data science workflows with automated machine learning and advanced analytics tools.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>AI</span>
+              <span>San Francisco</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Fintech">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#2196f3"/>
+                  <path d="M12 24H36M12 30H36M12 18H36" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 12L24 20L32 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">PaySync</h3>
+                <p class="company-tagline">Global payments</p>
+              </div>
+            </div>
+            <p class="company-description">Simplifying cross-border payments for businesses with instant, low-cost international transfers.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Fintech</span>
+              <span>London</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Healthcare">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#34a853"/>
+                  <path d="M24 16V32M16 24H32" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                  <circle cx="24" cy="24" r="12" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">MedTech</h3>
+                <p class="company-tagline">Digital therapeutics</p>
+              </div>
+            </div>
+            <p class="company-description">Developing evidence-based digital therapeutics for mental health and chronic disease management.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Healthcare</span>
+              <span>Boston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Food">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff9800"/>
+                  <path d="M24 12C27.3137 12 30 14.6863 30 18C30 21.3137 27.3137 24 24 24C20.6863 24 18 21.3137 18 18C18 14.6863 20.6863 12 24 12Z" fill="white"/>
+                  <path d="M12 36H36" stroke="#ff9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">FarmBot</h3>
+                <p class="company-tagline">Automated farming</p>
+              </div>
+            </div>
+            <p class="company-description">Robotic farming solutions that increase crop yields while reducing water usage and pesticides.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Food</span>
+              <span>Austin</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Transportation">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#607d8b"/>
+                  <path d="M16 20H32V24H16V20ZM18 26H22V30H18V26ZM26 26H30V30H26V26Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">RideShare</h3>
+                <p class="company-tagline">Micro-mobility platform</p>
+              </div>
+            </div>
+            <p class="company-description">Electric scooter and bike sharing platform with AI-powered route optimization and fleet management.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>Transportation</span>
+              <span>Los Angeles</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Real Estate">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#795548"/>
+                  <path d="M12 36H36" stroke="#795548" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 20H32V24H16V20ZM18 26H22V30H18V26ZM26 26H30V30H26V26Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">HomeAI</h3>
+                <p class="company-tagline">Smart home automation</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered home automation system that learns user preferences and optimizes energy consumption.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Real Estate</span>
+              <span>Phoenix</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Gaming">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#e91e63"/>
+                  <path d="M16 16H32V32H16V16ZM20 20V28M28 20V28" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">GameStudio</h3>
+                <p class="company-tagline">Interactive entertainment</p>
+              </div>
+            </div>
+            <p class="company-description">Creating immersive VR gaming experiences with cutting-edge graphics and haptic feedback technology.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Gaming</span>
+              <span>Seattle</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Energy">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ffeb3b"/>
+                  <path d="M24 12L24 36M12 24L36 24" stroke="#ff9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">SolarTech</h3>
+                <p class="company-tagline">Renewable energy solutions</p>
+              </div>
+            </div>
+            <p class="company-description">Next-generation solar panels with improved efficiency and integrated battery storage systems.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Energy</span>
+              <span>Denver</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Media">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff5722"/>
+                  <path d="M16 18H32L30 28H18L16 18Z" stroke="white" stroke-width="2" fill="none"/>
+                  <circle cx="20" cy="32" r="2" fill="white"/>
+                  <circle cx="28" cy="32" r="2" fill="white"/>
+                  <path d="M14 14H16L16 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">StreamFlow</h3>
+                <p class="company-tagline">Content creation platform</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered video editing and streaming platform for content creators and businesses.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>Media</span>
+              <span>New York</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Logistics">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#00bcd4"/>
+                  <path d="M12 36H36" stroke="#00bcd4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 20H32V24H16V20ZM18 26H22V30H18V26ZM26 26H30V30H26V26Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">ShipFast</h3>
+                <p class="company-tagline">Last-mile delivery</p>
+              </div>
+            </div>
+            <p class="company-description">Autonomous drone delivery network for same-day shipping in urban and suburban areas.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Logistics</span>
+              <span>Miami</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Manufacturing">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#9e9e9e"/>
+                  <path d="M12 36H36" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 20H32V24H16V20ZM18 26H22V30H18V26ZM26 26H30V30H26V26Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">PrintTech</h3>
+                <p class="company-tagline">3D printing solutions</p>
+              </div>
+            </div>
+            <p class="company-description">Industrial-grade 3D printing technology for rapid prototyping and custom manufacturing.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Manufacturing</span>
+              <span>Detroit</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Fashion">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#f06292"/>
+                  <path d="M24 12L32 20L24 28L16 20L24 12Z" fill="white"/>
+                  <path d="M16 20V28L24 32L32 28V20" stroke="white" stroke-width="2" fill="none"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">StyleAI</h3>
+                <p class="company-tagline">Fashion recommendation</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered personal styling service that curates fashion recommendations based on individual preferences.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Fashion</span>
+              <span>New York</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Travel">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#03a9f4"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">TravelBot</h3>
+                <p class="company-tagline">Smart travel planning</p>
+              </div>
+            </div>
+            <p class="company-description">AI travel assistant that plans personalized itineraries and finds the best deals on flights and hotels.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>Travel</span>
+              <span>San Francisco</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Sports">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#8bc34a"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">FitTrack</h3>
+                <p class="company-tagline">Athletic performance</p>
+              </div>
+            </div>
+            <p class="company-description">Wearable technology and analytics platform for professional athletes and fitness enthusiasts.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Sports</span>
+              <span>Portland</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Agriculture">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#689f38"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">CropSense</h3>
+                <p class="company-tagline">Precision agriculture</p>
+              </div>
+            </div>
+            <p class="company-description">IoT sensors and satellite imagery for precision farming and crop yield optimization.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Agriculture</span>
+              <span>Kansas City</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Space">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#673ab7"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">SpaceTech</h3>
+                <p class="company-tagline">Satellite technology</p>
+              </div>
+            </div>
+            <p class="company-description">Miniaturized satellite technology for Earth observation and communication networks.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Space</span>
+              <span>Houston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Retail">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff7043"/>
+                  <path d="M16 18H32L30 28H18L16 18Z" stroke="white" stroke-width="2" fill="none"/>
+                  <circle cx="20" cy="32" r="2" fill="white"/>
+                  <circle cx="28" cy="32" r="2" fill="white"/>
+                  <path d="M14 14H16L16 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">RetailBot</h3>
+                <p class="company-tagline">Automated retail</p>
+              </div>
+            </div>
+            <p class="company-description">Fully automated retail stores with AI-powered inventory management and cashier-less checkout.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span>Retail</span>
+              <span>Chicago</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Communication">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#26a69a"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">ChatFlow</h3>
+                <p class="company-tagline">Team collaboration</p>
+              </div>
+            </div>
+            <p class="company-description">Next-generation team communication platform with AI-powered meeting summaries and task automation.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Communication</span>
+              <span>San Francisco</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="Music">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ab47bc"/>
+                  <path d="M12 36H36" stroke="#ab47bc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 12L32 28M32 12L16 28" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">SoundWave</h3>
+                <p class="company-tagline">Music creation AI</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered music composition and production tools for creators and music professionals.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span>Music</span>
+              <span>Nashville</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Legal">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#546e7a"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">LegalTech</h3>
+                <p class="company-tagline">Legal automation</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered legal document analysis and contract automation for law firms and businesses.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Legal</span>
+              <span>Washington DC</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Blockchain">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff9800"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">BlockChain</h3>
+                <p class="company-tagline">Decentralized finance</p>
+              </div>
+            </div>
+            <p class="company-description">Building the next generation of decentralized financial infrastructure with smart contracts and DeFi protocols.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Blockchain</span>
+              <span>San Francisco</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Biotech">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#4caf50"/>
+                  <path d="M24 12L32 20L24 28L16 20L24 12Z" fill="white"/>
+                  <circle cx="24" cy="24" r="3" fill="#4caf50"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">BioTech</h3>
+                <p class="company-tagline">Gene therapy solutions</p>
+              </div>
+            </div>
+            <p class="company-description">Developing revolutionary gene therapy treatments for rare genetic diseases and cancer.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span>Biotech</span>
+              <span>Boston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="EdTech">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#2196f3"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">EduFlow</h3>
+                <p class="company-tagline">Online learning platform</p>
+              </div>
+            </div>
+            <p class="company-description">Interactive online learning platform with AI-powered tutoring and personalized curriculum.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>EdTech</span>
+              <span>Chicago</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="IoT">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#9c27b0"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">IoTHub</h3>
+                <p class="company-tagline">Smart device network</p>
+              </div>
+            </div>
+            <p class="company-description">Connected device platform for smart homes and industrial IoT applications.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span>IoT</span>
+              <span>Austin</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Robotics">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#607d8b"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">RoboTech</h3>
+                <p class="company-tagline">Service robotics</p>
+              </div>
+            </div>
+            <p class="company-description">Autonomous service robots for hospitality, healthcare, and retail industries.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Robotics</span>
+              <span>Seattle</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Cybersecurity">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#f44336"/>
+                  <rect x="16" y="20" width="16" height="12" rx="3" fill="white"/>
+                  <circle cx="24" cy="26" r="3" fill="#f44336"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">CyberShield</h3>
+                <p class="company-tagline">Advanced threat detection</p>
+              </div>
+            </div>
+            <p class="company-description">AI-powered cybersecurity platform protecting against advanced persistent threats and zero-day attacks.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span>Cybersecurity</span>
+              <span>Washington DC</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W23" data-industry="VR/AR">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#e91e63"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">VRWorld</h3>
+                <p class="company-tagline">Virtual reality experiences</p>
+              </div>
+            </div>
+            <p class="company-description">Immersive VR platform for education, training, and entertainment applications.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W23</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>VR/AR</span>
+              <span>Los Angeles</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S22" data-industry="Drone">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#795548"/>
+                  <path d="M12 12H36V36H12V12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16 16H32V32H16V16Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">DroneFlow</h3>
+                <p class="company-tagline">Autonomous drone services</p>
+              </div>
+            </div>
+            <p class="company-description">Commercial drone solutions for agriculture, inspection, and surveillance applications.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S22</span>
+              <span>Drone</span>
+              <span>Phoenix</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Quantum">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#673ab7"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">QuantumCore</h3>
+                <p class="company-tagline">Quantum computing</p>
+              </div>
+            </div>
+            <p class="company-description">Quantum computing platform for cryptography, optimization, and scientific simulation.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Quantum</span>
+              <span>Boston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="S23" data-industry="Hydrogen">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#00e676"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">HydrogenTech</h3>
+                <p class="company-tagline">Hydrogen fuel cells</p>
+              </div>
+            </div>
+            <p class="company-description">Advanced hydrogen fuel cell technology for clean energy storage and transportation.</p>
+            <div class="company-meta">
+              <span class="batch-tag">S23</span>
+              <span>Hydrogen</span>
+              <span>Houston</span>
+            </div>
+          </div>
+          
+          <div class="company-card" data-batch="W24" data-industry="Fusion">
+            <div class="company-header">
+              <div class="company-logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="48" height="48" rx="8" fill="#ff6f00"/>
+                  <path d="M24 4L24 44M4 24L44 24" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="company-info">
+                <h3 class="company-name">FusionPower</h3>
+                <p class="company-tagline">Nuclear fusion energy</p>
+              </div>
+            </div>
+            <p class="company-description">Compact nuclear fusion reactors for clean, unlimited energy generation.</p>
+            <div class="company-meta">
+              <span class="batch-tag">W24</span>
+              <span class="hiring-tag">Hiring</span>
+              <span>Fusion</span>
+              <span>Cambridge</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#">YC Program</a></li>
+          <li><a href="#">Startup School</a></li>
+          <li><a href="#">Work at a Startup</a></li>
+          <li><a href="#">Co-Founder Matching</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">YC Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">People</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Notice at Collection</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Terms of Use</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Startup Directory</a></li>
+          <li><a href="#">Startup Library</a></li>
+          <li><a href="#">Investors</a></li>
+          <li><a href="#">SAFE</a></li>
+          <li><a href="#">Hacker News</a></li>
+          <li><a href="#">Launch YC</a></li>
+          <li><a href="#">YC Deals</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 Y Combinator</p>
+    </div>
+  </footer>
+  <script>
+    let activeSorts = new Set(['top']);
+
+    // Industry color and icon mapping
+    const industryConfig = {
+      'AI': { color: '#4285f4', icon: 'M24 12L32 20L24 28L16 20L24 12Z' },
+      'Healthcare': { color: '#34a853', icon: 'M24 16V32M16 24H32' },
+      'Fintech': { color: '#ea4335', icon: 'M18 20L24 14L30 20M18 28L24 34L30 28' },
+      'Education': { color: '#fbbc04', icon: 'M24 16L32 20L24 24L16 20L24 16Z' },
+      'E-commerce': { color: '#9c27b0', icon: 'M16 18H32L30 28H18L16 18Z' },
+      'Climate': { color: '#4caf50', icon: 'M24 12C29 12 33 16 33 21C33 26 29 30 24 30C19 30 15 26 15 21C15 16 19 12 24 12Z' },
+      'Gaming': { color: '#e91e63', icon: 'M16 16H32V32H16V16ZM20 20V28M28 20V28' },
+      'Security': { color: '#f44336', icon: 'M24 14L30 18V28C30 30 24 32 24 32S18 30 18 28V18L24 14Z' },
+      'Transportation': { color: '#607d8b', icon: 'M16 20H32V24H16V20ZM18 26H22V30H18V26ZM26 26H30V30H26V26Z' },
+      'Space': { color: '#673ab7', icon: 'M24 14L26 20H32L27 24L29 30L24 26L19 30L21 24L16 20H22L24 14Z' }
+    };
+
+    function generateLogo(companyName, industry) {
+      const config = industryConfig[industry] || { color: '#6b7280', icon: 'M16 16H32V32H16V16Z' };
+      // Always use Y instead of the company initial
+      
+      return `
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="48" height="48" rx="8" fill="${config.color}"/>
+          <path d="${config.icon}" stroke="white" stroke-width="2" fill="white" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="24" y="38" text-anchor="middle" fill="white" font-size="8" font-weight="bold">Y</text>
+        </svg>
+      `;
+    }
+
+    function updateLogos() {
+      const companyCards = document.querySelectorAll('.company-card');
+      companyCards.forEach(card => {
+        const logoContainer = card.querySelector('.company-logo');
+        const companyName = card.querySelector('.company-name').textContent;
+        const industry = card.getAttribute('data-industry');
+        
+        if (logoContainer && !logoContainer.querySelector('svg')) {
+          logoContainer.innerHTML = generateLogo(companyName, industry);
+        }
+      });
+    }
+
+    function applyFilters() {
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const batchFilter = document.getElementById('batch-filter').value;
+      const industryFilter = document.getElementById('industry-filter').value;
+      const regionFilter = document.getElementById('region-filter').value;
+      const sizeFilter = document.getElementById('size-filter').value;
+
+      const cards = document.querySelectorAll('.company-card');
+      
+      cards.forEach(card => {
+        const name = card.querySelector('.company-name').textContent.toLowerCase();
+        const description = card.querySelector('.company-description').textContent.toLowerCase();
+        const tagline = card.querySelector('.company-tagline').textContent.toLowerCase();
+        const cardBatch = card.getAttribute('data-batch');
+        const cardIndustry = card.getAttribute('data-industry');
+
+        const searchMatch = name.includes(searchQuery) || description.includes(searchQuery) || tagline.includes(searchQuery);
+        const batchMatch = batchFilter === 'all' || cardBatch === batchFilter;
+        const industryMatch = industryFilter === 'all' || cardIndustry === industryFilter;
+        
+        const isHiring = activeSorts.has('hiring') ? !!card.querySelector('.hiring-tag') : true;
+
+        if (searchMatch && batchMatch && industryMatch && isHiring) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleSort(button) {
+      const sortType = button.getAttribute('data-sort');
+      
+      if (activeSorts.has(sortType)) {
+        activeSorts.delete(sortType);
+        button.classList.remove('active');
+      } else {
+        activeSorts.add(sortType);
+        button.classList.add('active');
+      }
+      
+      // Re-apply all filters with the new sort
+      applyFilters();
+    }
+    
+    // Initial setup on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateLogos(); // Generate logos for all companies
+      applyFilters();
+
+      const cards = document.querySelectorAll('.company-card');
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          const companyName = this.querySelector('.company-name').textContent;
+          console.log(`Clicked on ${companyName}`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
